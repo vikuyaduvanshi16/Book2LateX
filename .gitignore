@@ -1,21 +1,61 @@
+# ========================
 # Python
+# ========================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.sqlite3
+*.egg-info/
+dist/
+build/
 
 # Virtual environments
 venv/
 .env/
+.venv/
 
+# ========================
 # VS Code
+# ========================
 .vscode/
 
-# OS files
+# ========================
+# OS Files
+# ========================
 .DS_Store
 Thumbs.db
 
-# Output folder
-output/*.aux
-output/*.log
-output/*.pdf
+# ========================
+# Logs
+# ========================
+*.log
+
+# ========================
+# LaTeX Build Files
+# ========================
+*.aux
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+*.lof
+*.lot
+
+# PDFs (generated outputs)
+*.pdf
+
+# ========================
+# Project Generated Output
+# ========================
+output/
+
+# ========================
+# Temporary Files
+# ========================
+*.tmp
+*.temp
+*.bak
