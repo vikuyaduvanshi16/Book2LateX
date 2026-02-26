@@ -2,9 +2,17 @@ import argparse
 import logging
 import os
 import sys
+
 from scripts.parser import parse_text
 from scripts.template import wrap_latex
+from scripts.preprocess import preprocess_ocr
+from scripts.ocr_engine import extract_text_from_folder
+from scripts.ai_cleanup import ai_math_cleanup
 
+
+# ----------------------------------------
+# Logging
+# ----------------------------------------
 
 def setup_logger(verbose: bool):
     level = logging.DEBUG if verbose else logging.INFO
@@ -14,19 +22,35 @@ def setup_logger(verbose: bool):
     )
 
 
+# ----------------------------------------
+# Argument Parsing
+# ----------------------------------------
+
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Convert plain text book into LaTeX format"
+        description="Convert OCR text into structured LaTeX book format"
     )
 
     parser.add_argument(
         "input_file",
-        help="Path to input text file"
+        help="Path to input OCR text file"
     )
 
     parser.add_argument(
         "-o", "--output",
         help="Output LaTeX file path"
+    )
+
+    parser.add_argument(
+        "--title",
+        default="Discrete Mathematics",
+        help="Book title"
+    )
+
+    parser.add_argument(
+        "--author",
+        default="Vikash Yadav",
+        help="Author name"
     )
 
     parser.add_argument(
@@ -44,13 +68,21 @@ def parse_arguments():
     return parser.parse_args()
 
 
+# ----------------------------------------
+# Path Handling
+# ----------------------------------------
+
 def determine_output_path(input_path, output_arg):
     if output_arg:
         return output_arg
 
     filename = os.path.splitext(os.path.basename(input_path))[0]
-    return f"output/{filename}.tex"
+    return os.path.join("output", f"{filename}.tex")
 
+
+# ----------------------------------------
+# File IO
+# ----------------------------------------
 
 def read_input(path):
     if not os.path.exists(path):
@@ -82,18 +114,39 @@ def write_output(path, content, overwrite):
         sys.exit(1)
 
 
+# ----------------------------------------
+# Main Pipeline
+# ----------------------------------------
+
 def main():
     args = parse_arguments()
     setup_logger(args.verbose)
 
     logging.debug("Arguments parsed successfully")
 
-    text = read_input(args.input_file)
+    # If input is folder → run OCR
+    if os.path.isdir(args.input_file):
+        logging.info("Running OCR on image folder...")
+        text = extract_text_from_folder(args.input_file)
+    else:
+        logging.info("Reading OCR text...")
+        text = read_input(args.input_file)
 
-    logging.info("Converting text → LaTeX")
+    logging.info("Preprocessing OCR text...")
+    text = preprocess_ocr(text)
 
-    parsed = parse_text(text)
-    latex_output = wrap_latex(parsed)
+    logging.info("Running AI math cleanup...")
+    text = ai_math_cleanup(text)
+
+    logging.info("Parsing structure...")
+    parsed_content = parse_text(text)
+
+    logging.info("Applying LaTeX template...")
+    latex_output = wrap_latex(
+        parsed_content,
+        title=args.title,
+        author=args.author
+    )
 
     output_path = determine_output_path(args.input_file, args.output)
     logging.debug(f"Output path resolved → {output_path}")
@@ -101,7 +154,6 @@ def main():
     write_output(output_path, latex_output, args.overwrite)
 
     logging.info(f"✔ Conversion successful → {output_path}")
-
 
 if __name__ == "__main__":
     main()

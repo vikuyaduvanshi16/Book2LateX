@@ -1,49 +1,56 @@
 import re
 
-def is_math(line):
-    return bool(re.search(r"[=^+\-*/]", line))
+
+def escape_text(text: str) -> str:
+    replacements = {
+        "&": r"\&",
+        "%": r"\%",
+        "#": r"\#",
+        "_": r"\_",
+    }
+    for k, v in replacements.items():
+        text = text.replace(k, v)
+    return text
 
 
-def parse_text(text):
+def clean_ocr(line: str) -> str:
+    # line = line.replace(" E ", r" \in ")
+    # line = line.replace(" U ", r" \cup ")
+    # line = line.replace(" n ", r" \cap ")
+    return line
+
+
+def parse_text(text: str) -> str:
     lines = text.split("\n")
     output = []
 
     for line in lines:
         line = line.strip()
 
-        # Chapter
+        if not line:
+            output.append("")
+            continue
+
+        line = clean_ocr(line)
+
+        # Chapter detection
         if line.lower().startswith("chapter"):
-            output.append(f"\\chapter{{{line}}}")
+            output.append(f"\\chapter{{{escape_text(line)}}}")
+            continue
 
-        # Section
-        elif line.lower().startswith("section"):
-            title = line.replace("Section", "").strip()
-            output.append(f"\\section{{{title}}}")
+        # Section detection (1.1 Title)
+        section_match = re.match(r"^(\d+\.\d+)\s+(.*)", line)
+        if section_match:
+            number, title = section_match.groups()
+            output.append(f"\\section{{{escape_text(title)}}}")
+            continue
 
-        # Subsection
-        elif line.lower().startswith("subsection"):
-            title = line.replace("Subsection", "").strip()
-            output.append(f"\\subsection{{{title}}}")
+        # Example detection
+        if line.lower().startswith("example"):
+            output.append(f"\\begin{{example}}\n{escape_text(line)}\n\\end{{example}}")
+            continue
 
-        # Math detection
-        elif is_math(line):
-            output.append(f"${line}$")
-
-        # Bold text
-        else:
-            line = line.replace("**", "\\textbf{", 1).replace("**", "}", 1)
-            output.append(line)
+        # Normal text only (NO AUTO MATH)
+        output.append(escape_text(line))
 
     return "\n".join(output)
-
-
-def convert_file(input_path, output_path):
-    with open(input_path, "r", encoding="utf-8") as f:
-        text = f.read()
-
-    latex = parse_text(text)
-
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(latex)
-
-

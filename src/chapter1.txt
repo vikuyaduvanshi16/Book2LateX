@@ -1,0 +1,134 @@
+                                 CHAPTER         1 
+
+
+
+
+              SET THEORY
+
+
+
+This Chapter Covers :
+Section Topic                                Pages
+   1.1. Introduction                             1
+   1.2. Symbols and Notations                    2
+   1.3. Set                                      2
+   1.4. Multi-sets and Multiplicity              3
+   1.5. Venn Diagram                             4
+   1.6. Set Operations                           5
+   1.7. Algebra of the Set                       7
+   1.8  Dimension of a Set                       8
+   1.9  Partition of a Set S                     8
+   1.10.Cartesian Product                        9
+   1.11.Functions                               15
+   1.12.Floor and Ceiling Functions             20
+   1.13.Permutation Functions                   22
+   1.14.Characteristic Functions                29
+   1.15.Special Types Functions                 32
+        Exercises                               40
+
+
+ 1.1.INTRODUCTION
+This chapter gives the foundation of discrete mathematics. Much of discrete 
+mathematics is devoted to the study of discrete structures, which are used to 
+represent discrete objects. All discrete structures are built up from sets, which 
+are collection of objects, used extensively in counting ; relations, which are 
+set of ordered pairs that represent relationships between objects ; graphs, 
+which are set of vertices & connected edges.
+   In this chapter we cover some of the basic set languages and notations 
+that will be used throughout the text. Venn diagrams will be introduced in 
+order to give clear picture of set theory.
+                          1
+
+
+2 CI Discrete Mathematics CI
+
+ 1.2. SYMBOLS AND NOTATIONS
+Following are the special symbols to denote the sets which will be used very 
+often in the text.
+    N Set of natural numbers 
+    Z Set of integers
+    Q Set of rational numbers
+    R Set of real numbers
+    C Set of complex numbers
+
+1.3. SET
+A set is a collection of well defined objects. The objects that constitute a set 
+are called elements or members of the set.
+    Usually set is denoted by capital letters A, B, C, and its elements
+are denoted by lower case letters a, b, c, For example, if A is any set
+having elements x1, x2, x3 then we write
+                        A = {x1, x2, x3}
+    If an element x is in the set A or belongs to the set A then it is denoted 
+by x E A otherwise x e A.
+    For example : x1 E A but a e A
+    Usually sets are denoted by two ways : One way is to define a set by 
+listing the elements and the second way is to state those properties which 
+characterise the elements in the set.
+EXAMPLE 1.1. If X is the set having four elements say 2, 4, 6, 8 then x can 
+be given by;
+               X = {x I x is an even positive integer less than 10}
+           or
+               X = {2, 4, 6, 8}
+    Here first way is by defining the property and the second way is by listing 
+the elements.
+    Subsets : Let X and Y be two sets. If every element of the set Xis also 
+the element in Y then X is called subset of Y and is denoted by X c Y, and 
+it means either Xis in Y or X equals to Y. If Xis not equal to Y then Xis called 
+proper subset or trivial of Y and is denoted by X c Y.
+EXAMPLE 1.2. X = set of natural numbers = {xl x o N}
+               Y = set of integers = {y I y E Z}
+    then X c Y
+EXAMPLE 1.3. X= {1, 2, 3, 5, 7, 9}
+               Y = 1, 2, 3, 5, 7, 9, 8}
+    then X c Y
+    Equal sets : Two sets A and B are said to be equal if they have same 
+elements & is denoted by A = B.
+    For example A = 2, 3}, B = {x E NI1 x 3}
+    then A = B.
+
+
+                                        l Set Theory O 3
+
+
+EXAMPLE 1.4. X={x:x2-3x+2=0}
+            Y = {1, 2}
+
+            Z {1,2,5 15
+   It is notable in the example (1.4) that all the above three sets are equal, 
+therefore, the set does not depend on the way in which its elements are displayed.
+
+   Do not use {4)} because this means the set containing the null set 4). The 
+null set is a subset of every set.
+                c A means X E 4)-4 XEA
+   This is true by default.
+Power Set :
+   Power set of A is the set of all subsets of A, called P(A). So if we are given 
+            B = {a, b, c,
+              = 14), {a}, {b},{c},{d}, {a, b}, {a, c}, {a, d},{b,c},{b,d}, 
+          AB)   {c,c1},{a,b,c}, {a, b,d},{b,c,c1}, {a, b,c,d}
+   There are 24 subsets in a power set, where n represents the number of sets 
+in the original set. Cardinality of a set in the number of members in a set, if that 
+number is a non-negative integer.
+   The cardinality of B:
+              I BI =4
+Note:            =2181
+   Proper subset—a subset which is not equal to the original set. 
+              A cB
+
+  1.4. MULTI-SETS AND MULTIPLICITY
+If a set contains exactly m distinct elements where m denotes some non- 
+negative integers, then the set is said to be a finite set otherwise the set is 
+said to be an infinite set.
+   For example, the set {1, 2, 5, 7, 9} is a finite set whereas N, the set of 
+natural number is infinite set.
+   As we have discussed above that we can define a set by different ways. 
+Now, we define a multiset which is used to define a collection of objects which 
+are not necessarily distinct.
+   For example {1, 1, 2, 2, 2}, {a, b, c}, { }, {1, 1} are all multisets.
+   Multiplicity of a Set : Number of times an element appearing in a set 
+is called multiplicity of that element. As in the above first example {1, 1, 2, 
+2, 2} multiplicity of 1 is 2 & multiplicity of 2 is 3.
+   Definition : The sum of the multiplicities of the elements in the sets 
+P and Q is denoted by multiplicity in the set P + Q.
+EXAMPLE 1.5. Let P = {a, a, b, b, c}
+
